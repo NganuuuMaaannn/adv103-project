@@ -10,14 +10,19 @@
             </div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header text-white" style="background-color: #1F509A;">
                         Profile Page
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <span class="h4"> Profile Information</span> <a class="btn btn-info btn-sm float-right"
-                                    href="{% url 'user-profile-update' %}">Edit</a>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="h4">Profile Information</span>
+                                    <div>
+                                        <a class="btn text-white btn-sm mr-2" style="background-color: #E38E49;" href="{% url 'user-profile-update' %}">Edit</a>
+                                        <a class="btn text-white btn-sm" style="background-color: #1F509A;" href="{% url 'dashboard-index' %}">Back</a>
+                                    </div>
+                                </div>                                
                                 <hr>
                                 <table class="table bg-white table-borderless">
                                     <tbody>

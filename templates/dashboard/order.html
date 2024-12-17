@@ -1,12 +1,9 @@
 {% extends 'partials/base.html' %}
 {% block title %}Order Page{% endblock %}
 
-
-
 {% block content %}
 
 {% include 'partials/topnav.html' %}
- <!--Table-->
     <div class="container">
         <div class="row my-4">
             <div class="col-md-4">
@@ -14,26 +11,26 @@
             </div>
             <div class="col-md-8">
                 <table class="table bg-white">
-                    <thead class="bg-info">
+                    <thead style="background-color: #1F509A;">
                         <tr class="text-white">
-                            <th scope="col">Product</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Order by</th>
-                            <th scope="col">Date</th>
+                            <th scope="col" class="text-center">Product</th>
+                            <th scope="col" class="text-center">Category</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-center">Order by</th>
+                            <th scope="col" class="text-center">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for orders in orders %}
+                        {% for orders in orders|dictsortreversed:"date" %}
                         <tr>
-                            <td>{{ orders.product }}</td>
-                            <td>{{ orders.product.category }}</td>
-                            <td>{{ orders.order_quantity }}</td>
-                            <td>
+                            <td class="text-center">{{ orders.product }}</td>
+                            <td class="text-center">{{ orders.product.category }}</td>
+                            <td class="text-center">{{ orders.order_quantity }}</td>
+                            <td class="text-center">
                                 {{ orders.staff.username }}
                             </td>
-                            <td>
-                                {{ orders.date}}
+                            <td class="text-center">
+                                {{ orders.date }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -44,10 +41,4 @@
         </div>
 
     </div>
-
-
-
-    <!--End Table-->
-
-
 {% endblock %}

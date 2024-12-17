@@ -6,16 +6,16 @@
  
 {% if user.is_authenticated and user.is_staff and user.is_superuser %}
 {% include 'partials/topnav.html' %}
-<!--Graphs-->
-<div class="container">
+
+<div class="container vh-100">
     <div class="row my-5">
         <div class="col-md-6">
-            <div class="bg-white">
+            <div class="bg-white p-4">
                 <canvas id="myChart1" width="400" height="300"></canvas>
                 <script>
                     var ctx = document.getElementById('myChart1').getContext('2d');
                     var myChart1 = new Chart(ctx, {
-                        type: 'pie',
+                        type: 'doughnut', // Changed to doughnut
                         data: {
                             labels: [{% for order in orders %} '{{ order.product.name}}', {% endfor %}],
                             datasets: [{
@@ -54,69 +54,76 @@
                             }]
                         },
                         options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
+                            plugins: {
+                                tooltip: {
+                                    enabled: false, // Disable the tooltips (data labels)
+                                },
+                                legend: {
+                                    display: true, // Show legend if you want
+                                }
+                            },
+                            cutoutPercentage: 50, // Adjusts the hole size, 50 means it's half the size of the chart
                         }
                     });
                 </script>
-            </div>
+            </div>                       
         </div>
         <div class="col-md-6">
-            <div class="bg-white">
-                <canvas id="myChart" width="400" height="300"></canvas>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <canvas id="productTrendsChart" width="400" height="300"></canvas>
                 <script>
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
+                    const trendsCtx = document.getElementById('productTrendsChart').getContext('2d');
+                    const gradientLine = trendsCtx.createLinearGradient(0, 0, 400, 0);
+                    gradientLine.addColorStop(0, 'rgba(54, 162, 235, 0.8)');
+                    gradientLine.addColorStop(1, 'rgba(255, 99, 132, 0.8)');
+
+                    new Chart(trendsCtx, {
+                        type: 'line',
                         data: {
-                            labels: [{% for product in products %} '{{ product.name }}', {% endfor %}],
+                            labels: [{% for product in products %}'{{ product.name }}',{% endfor %}],
                             datasets: [{
-                                label: 'Products',
-                                data: [{% for product in products %} {{ product.quantity }}, {% endfor %}],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(25, 159, 64, 1)',
-                                    'rgba(211, 99, 12, 1)',
-                                    'rgba(255, 16, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(34, 142, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)',
-                                    'rgba(25, 159, 64, 1)',
-                                    'rgba(211, 99, 12, 1)',
-                                    'rgba(255, 16, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(34, 142, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)',
-                                ],
-                                borderWidth: 1
+                                label: 'Quantity Over Time',
+                                data: [{% for product in products %}{{ product.quantity }},{% endfor %}],
+                                fill: true,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: gradientLine,
+                                borderWidth: 2,
+                                tension: 0.4, // Smooth curves
+                                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                                pointBorderColor: '#fff',
+                                pointRadius: 5,
                             }]
                         },
                         options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `${context.label}: ${context.raw}`;
+                                        }
                                     }
-                                }]
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    display: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Products'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Quantity'
+                                    }
+                                }
                             }
                         }
                     });
@@ -125,7 +132,7 @@
         </div>
     </div>
 </div>
-<!--End Graphs-->
+
 {% else %}
 {% include 'dashboard/Staff_index.html' %}
 {% endif %}

@@ -21,29 +21,29 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <input class="btn btn-success btn-block" type="submit" value="Add Product">
+                    <input class="btn text-white btn-block" style="background-color: #E38E49;" type="submit" value="Add Product">
 
                 </form>
             </div>
         </div>
         <div class="col-md-8">
             <table class="table bg-white">
-                <thead class="bg-info">
+                <thead style="background-color: #1F509A;">
                     <tr class="text-white">
-                        <th scope="col">Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Activity</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Category</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-center">Activity</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in items %}
                     <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{item.category}}</td>
-                        <td>{{item.quantity}}</td>
-                        <td>
-                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.id%}">Edit</a>
+                        <td class="text-center">{{ item.name }}</td>
+                        <td class="text-center">{{item.category}}</td>
+                        <td class="text-center">{{item.quantity}}</td>
+                        <td class="text-center">
+                            <a class="btn text-white btn-sm" href="{% url 'dashboard-product-update' item.id%}" style="background-color: #E38E49;">Edit</a>
                             <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.id%}">Delete</a>
                         </td>
                     </tr>
