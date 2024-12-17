@@ -2,16 +2,16 @@
 {% block title %} Logout Page {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container rounded-lg">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="border bg-white p-3">
                 <div class="alert alert-danger">
                     <form action="" method="POST">
                         {% csrf_token %}
-                        <h3>You are logged out</h3>
+                        <h3>Oh no! you are logged out</h3>
                         <hr>
-                        <a href="{% url 'user-login' %}">Login</a>
+                        <a href="{% url 'user-login' %}">Login Again</a>
                     </form>
                 </div> 
             </div>

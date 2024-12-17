@@ -1,8 +1,8 @@
 {% extends 'partials/base.html' %}
-{% block title %} Staff Page {% endblock %}
+{% block title %} Staff Details {% endblock %}
 
 {% block content %}
-<!--Table-->
+
 {% include 'partials/topnav.html' %}
 <div class="container">
     <div class="row my-4">
@@ -11,13 +11,18 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-info text-white">
-                    Profile Page
+                <div class="card-header text-white" style="background-color: #1F509A;">
+                   <strong> Profile Page </strong>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8">
-                            <span class="h4"> Profile Information</span> 
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="h4">Profile Information</span>
+                                <div>
+                                    <a class="btn text-white btn-sm" style="background-color: #E38E49;" href="{% url 'dashboard-staff' %}">Back</a>
+                                </div>
+                            </div>
                             <hr>
                             <table class="table bg-white table-borderless">
                                 <tbody>

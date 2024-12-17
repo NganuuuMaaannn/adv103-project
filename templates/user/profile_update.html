@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header text-white" style="background-color: #1F509A;">
                         Profile Page
                     </div>
                     <div class="card-body">
@@ -22,7 +22,8 @@
                                     {% csrf_token %}
                                     {{ user_form|crispy }}
                                     {{ profile_form|crispy }}
-                                    <input class="btn btn-info" type="submit" value="Update">
+                                    <input class="btn text-white" style="background-color: #E38E49;" type="submit" value="Update">
+                                    <a class="btn text-white" style="background-color: #1F509A;" href="{% url 'user-profile' %}">Back</a>
                                 </form>
 
                             </div>
