@@ -29,7 +29,6 @@ def index(request):
                 product.quantity -= ordered_quantity
                 product.save()
                 instance.save()
-                # Show success message only if the user is an admin
                 if request.user.is_staff:
                     messages.success(request, f'Order placed successfully for {product.name}.')
                 return redirect('dashboard-index')
