@@ -144,6 +144,12 @@ LOGIN_REDIRECT_URL = 'dashboard-index'
 
 LOGIN_URL = 'user-login'
 
+TIME_ZONE = 'Asia/Manila'  # Change this to your timezone, e.g., 'America/New_York', 'Europe/London'
+
+# Enable timezone support (Django uses UTC for storage)
+USE_TZ = True
+
+
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST ='smtp.gmail.com'
 # EMAIL_PORT = 587
