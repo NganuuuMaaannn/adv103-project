@@ -16,17 +16,34 @@ def index(request):
     orders_count = orders.count()
     product_count = products.count()
     workers_count = User.objects.all().count()
-    
-    if request.method=='POST':
+
+    if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.staff = request.user
-            instance.save()
-            return redirect('dashboard-index')
+            product = instance.product
+            ordered_quantity = instance.order_quantity
+
+            if product.quantity >= ordered_quantity:
+                product.quantity -= ordered_quantity
+                product.save()
+                instance.save()
+                # Show success message only if the user is an admin
+                if request.user.is_staff:
+                    messages.success(request, f'Order placed successfully for {product.name}.')
+                return redirect('dashboard-index')
+            else:
+                messages.error(
+                    request,
+                    f'Insufficient stock for {product.name}. Available stock: {product.quantity}'
+                )
+        else:
+            messages.error(request, "Invalid form submission. Please try again.")
     else:
         form = OrderForm()
-    context={
+
+    context = {
         'orders': orders,
         'form': form,
         'products': products,
@@ -35,9 +52,9 @@ def index(request):
         'orders_count': orders_count,
     }
     return render(request, 'dashboard/index.html', context)
+
+
     
-
-
 
 @login_required
 def staff(request):
