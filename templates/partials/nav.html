@@ -16,7 +16,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2"><strong>{{ user.username }}</strong></span>
-                        <i class="fa fa-user-circle" style="font-size: 24px;"></i>   
+                        <img src="{{ user.profile.image.url }}" alt="" style="width: 30px; height: 30px;">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'user-profile' %}">Profile</a>
